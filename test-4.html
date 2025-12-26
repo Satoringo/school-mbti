@@ -63,10 +63,23 @@
       b.onclick=()=>{ score[q.pointB]=(score[q.pointB]||0)+1; localStorage.setItem(KEY,JSON.stringify(score)); lock(); };
       wrap.appendChild(d);
     });
+document.getElementById("resultBtn").onclick=()=>{
+  const KEY="smbti_score_v1";
+  const s = JSON.parse(localStorage.getItem(KEY) || "{}");
 
-    document.getElementById("resultBtn").onclick=()=>{
-      location.href="result.html";
-    };
+  const type =
+    (s.S >= s.C ? "S" : "C") +
+    (s.T >= s.W ? "T" : "W") +
+    (s.G >= s.M ? "G" : "M") +
+    (s.L >= s.R ? "L" : "R");
+
+  // ★ 結果ページ用に保存
+  localStorage.setItem("smbti_type", type);
+
+  location.href = "result.html";
+};
+
+    
   </script>
 </body>
 </html>
