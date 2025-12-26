@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>診断 1/4｜すくタイプ16</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <header class="badge">
+      <span class="dot"></span> 診断 1 / 4（S / C）
+    </header>
+
+    <section class="card">
+      <h2>社交タイプチェック</h2>
+      <p class="mini">A / B を直感で選んでね（6問）</p>
+    </section>
+
+    <div id="qWrap" class="grid"></div>
+
+    <div class="cta">
+      <button id="nextBtn" class="btn primary" disabled>あと 6 問</button>
+      <a class="btn secondary" href="index.html">トップへ</a>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      { text:"休み時間、気づいたら…", A:"誰かと話してる", B:"静かに過ごしてる", pointA:"S", pointB:"C" },
+      { text:"初対面の人とは…", A:"割とすぐ話せる", B:"少し時間がかかる", pointA:"S", pointB:"C" },
+      { text:"班活動は…", A:"いろんな人と組みたい", B:"決まった人が安心", pointA:"S", pointB:"C" },
+      { text:"教室での居場所は…", A:"中央〜前のほう", B:"端や後ろのほう", pointA:"S", pointB:"C" },
+      { text:"放課後は…", A:"友だちと寄り道しがち", B:"家でゆっくり派", pointA:"S", pointB:"C" },
+      { text:"グループでの役割は？", A:"話す・盛り上げる", B:"聞く・まとめる", pointA:"S", pointB:"C" },
+    ];
+
+    // 最小ロジック（このページ用）
+    const KEY="smbti_score_v1";
+    const score = JSON.parse(localStorage.getItem(KEY) || '{"S":0,"C":0}');
+    const wrap=document.getElementById("qWrap");
+    let answered=0;
+
+    questions.forEach((q,i)=>{
+      const d=document.createElement("div");
+      d.className="card";
+      d.innerHTML=`
+        <h3>Q${i+1}. ${q.text}</h3>
+        <div class="cta">
+          <button class="btn primary">A. ${q.A}</button>
+          <button class="btn secondary">B. ${q.B}</button>
+        </div>`;
+      const [a,b]=d.querySelectorAll("button");
+      const lock=()=>{
+        a.disabled=true; b.disabled=true;
+        answered++;
+        document.getElementById("nextBtn").textContent = answered>=6 ? "次へ（2 / 4）" : `あと ${6-answered} 問`;
+        if(answered>=6){
+          document.getElementById("nextBtn").disabled=false;
+        }
+      };
+      a.onclick=()=>{ score[q.pointA]++; localStorage.setItem(KEY,JSON.stringify(score)); lock(); };
+      b.onclick=()=>{ score[q.pointB]++; localStorage.setItem(KEY,JSON.stringify(score)); lock(); };
+      wrap.appendChild(d);
+    });
+
+    document.getElementById("nextBtn").onclick=()=>{
+      location.href="test-2.html";
+    };
+  </script>
+</body>
+</html>
