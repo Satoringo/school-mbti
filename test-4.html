@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>診断 4/4｜すくタイプ16</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="badge">
+      <span class="dot"></span> 診断 4 / 4（L / R）
+    </header>
+
+    <section class="card">
+      <h2>学び派 / アクティブ派 チェック</h2>
+      <p class="mini">学校での過ごし方に近いほうを選んでね（6問）</p>
+    </section>
+
+    <div id="qWrap" class="grid"></div>
+
+    <div class="cta">
+      <button id="resultBtn" class="btn primary" disabled>結果を見る</button>
+      <a class="btn secondary" href="test-3.html">← 戻る</a>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      { text:"休み時間は…", A:"席でゆっくりしたい", B:"どこか行きたい", pointA:"L", pointB:"R" },
+      { text:"放課後は…", A:"家や自習時間が好き", B:"部活・遊びに行きたい", pointA:"L", pointB:"R" },
+      { text:"学校行事は…", A:"見る側でも満足", B:"参加する側が楽しい", pointA:"L", pointB:"R" },
+      { text:"優先しがちなのは…", A:"勉強・自分のペース", B:"友だち・イベント", pointA:"L", pointB:"R" },
+      { text:"自由時間ができたら…", A:"読書・動画・調べもの", B:"外に出たい・動きたい", pointA:"L", pointB:"R" },
+      { text:"学校生活で大事なのは…", A:"落ち着いた時間", B:"にぎやかな時間", pointA:"L", pointB:"R" },
+    ];
+
+    const KEY="smbti_score_v1";
+    const score = JSON.parse(localStorage.getItem(KEY) || '{"L":0,"R":0}');
+    const wrap=document.getElementById("qWrap");
+    let answered=0;
+
+    questions.forEach((q,i)=>{
+      const d=document.createElement("div");
+      d.className="card";
+      d.innerHTML=`
+        <h3>Q${i+19}. ${q.text}</h3>
+        <div class="cta">
+          <button class="btn primary">A. ${q.A}</button>
+          <button class="btn secondary">B. ${q.B}</button>
+        </div>`;
+      const [a,b]=d.querySelectorAll("button");
+      const lock=()=>{
+        a.disabled=true; b.disabled=true;
+        answered++;
+        document.getElementById("resultBtn").textContent =
+          answered>=6 ? "🎉 結果を見る" : `あと ${6-answered} 問`;
+        if(answered>=6){
+          document.getElementById("resultBtn").disabled=false;
+        }
+      };
+      a.onclick=()=>{ score[q.pointA]=(score[q.pointA]||0)+1; localStorage.setItem(KEY,JSON.stringify(score)); lock(); };
+      b.onclick=()=>{ score[q.pointB]=(score[q.pointB]||0)+1; localStorage.setItem(KEY,JSON.stringify(score)); lock(); };
+      wrap.appendChild(d);
+    });
+
+    document.getElementById("resultBtn").onclick=()=>{
+      location.href="result.html";
+    };
+  </script>
+</body>
+</html>
