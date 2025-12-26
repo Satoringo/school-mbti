@@ -1,0 +1,479 @@
+<!-- result.html 〜学校生活S-MBTI 結果ページ（16タイプ判定＋シェア）〜 -->
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="robots" content="index,follow" />
+  <title>診断結果｜すくタイプ16</title>
+  <meta name="description" content="学校生活S-MBTI（すくタイプ16）の診断結果ページ。あなたの学校生活タイプを表示します。" />
+
+  <!-- OGP（シェア用：画像は後で差し替えOK） -->
+  <meta property="og:title" content="すくタイプ16｜学校生活MBTI診断 結果" />
+  <meta property="og:description" content="あなたの学校生活タイプは…？ 24問で診断！" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta property="og:image" content="" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <style>
+    :root{
+      --bg:#FFF9F2;
+      --card:#ffffff;
+      --text:#333333;
+      --muted:#6B6B6B;
+      --pink:#FF8BA7;
+      --mint:#9BFFC7;
+      --yell:#FFE79B;
+      --shadow: 0 10px 25px rgba(0,0,0,.08);
+      --radius:18px;
+      --radius2:14px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", "Meiryo", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(800px 350px at 10% 0%, rgba(255,139,167,.25), transparent 60%),
+        radial-gradient(650px 320px at 95% 10%, rgba(155,255,199,.25), transparent 60%),
+        radial-gradient(600px 300px at 50% 100%, rgba(255,231,155,.25), transparent 60%),
+        var(--bg);
+      min-height:100vh;
+    }
+    a{color:inherit}
+    .wrap{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 18px 14px 40px;
+    }
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 10px 4px 14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.3px;
+    }
+    .badge{
+      display:inline-flex; align-items:center; justify-content:center;
+      width:34px; height:34px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--pink), var(--mint));
+      box-shadow: var(--shadow);
+      color:#fff;
+      font-weight:900;
+    }
+    .brand small{display:block; font-weight:700; color:var(--muted); letter-spacing:0}
+    .btn{
+      border:0;
+      border-radius: 999px;
+      padding: 12px 14px;
+      font-weight:800;
+      cursor:pointer;
+      transition: transform .06s ease, filter .15s ease;
+      box-shadow: var(--shadow);
+      background: var(--card);
+    }
+    .btn:active{transform: translateY(1px)}
+    .btnPrimary{
+      background: linear-gradient(135deg, var(--pink), #FFB4C6);
+      color:#fff;
+    }
+    .btnMint{
+      background: linear-gradient(135deg, var(--mint), #D6FFE9);
+      color:#165a35;
+    }
+    .btnRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 14px;
+    }
+    .card{
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(255,255,255,.65);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .hero{
+      padding: 18px 16px;
+    }
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,139,167,.12);
+      border: 1px solid rgba(255,139,167,.22);
+      color:#9b2543;
+      font-weight:800;
+      font-size: 13px;
+    }
+    .h1{
+      margin: 12px 0 6px;
+      font-size: 22px;
+      line-height:1.25;
+      letter-spacing: .2px;
+    }
+    .code{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-weight: 900;
+      font-size: 18px;
+      margin: 6px 0 2px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(155,255,199,.18);
+      border: 1px solid rgba(155,255,199,.35);
+    }
+    .desc{
+      margin: 10px 0 0;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .muted{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    @media(min-width:740px){
+      .grid{grid-template-columns: 1fr 1fr;}
+      .h1{font-size: 26px;}
+    }
+    .miniCard{
+      padding: 14px 14px;
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.8);
+      border: 1px solid rgba(255,255,255,.65);
+      box-shadow: 0 8px 16px rgba(0,0,0,.06);
+    }
+    .miniTitle{
+      font-weight: 900;
+      margin:0 0 6px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 12px;
+      background: rgba(255,231,155,.28);
+      border: 1px solid rgba(255,231,155,.55);
+    }
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      background: rgba(51,51,51,.92);
+      color:#fff;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .2s ease;
+      max-width: calc(100% - 24px);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .toast.show{opacity:1}
+    .error{
+      border: 1px solid rgba(255,139,167,.35);
+      background: rgba(255,139,167,.10);
+      color:#7d1231;
+      padding: 12px 12px;
+      border-radius: var(--radius2);
+      margin-top: 12px;
+      font-weight: 800;
+    }
+    footer{
+      margin-top: 18px;
+      padding: 10px 4px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    footer a{color: var(--muted); text-decoration: underline;}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand" aria-label="サイト名">
+        <div class="badge">16</div>
+        <div>
+          <div>すくタイプ16</div>
+          <small>学校生活MBTI診断</small>
+        </div>
+      </div>
+      <button class="btn" id="btnRetry" type="button" title="もう一回診断する">もう一回</button>
+    </div>
+
+    <main class="card hero" aria-live="polite">
+      <div class="kicker">🎓 診断結果</div>
+
+      <div class="h1" id="title">読み込み中…</div>
+      <div class="code" id="codePill" style="display:none;">CODE</div>
+
+      <p class="desc" id="desc"></p>
+
+      <div class="btnRow" id="shareRow" style="display:none;">
+        <button class="btn btnPrimary" id="btnShare" type="button">シェア</button>
+        <button class="btn btnMint" id="btnX" type="button">Xで投稿</button>
+        <button class="btn" id="btnCopy" type="button">リンクをコピー</button>
+      </div>
+
+      <div class="error" id="errorBox" style="display:none;"></div>
+      <p class="muted" style="margin-top:12px;">
+        ※この診断は学校生活の傾向を“ゆるく”楽しむためのものです◎
+      </p>
+    </main>
+
+    <section class="grid" aria-label="タイプのヒント">
+      <div class="miniCard">
+        <div class="miniTitle">🧩 4文字コードの見方 <span class="pill">オリジナル</span></div>
+        <div class="muted">
+          1文字目：S（社交）/ C（落ち着き）<br>
+          2文字目：T（きちんと）/ W（ゆるめ）<br>
+          3文字目：G（現実）/ M（ひらめき）<br>
+          4文字目：L（学び）/ R（アクティブ）
+        </div>
+      </div>
+
+      <div class="miniCard">
+        <div class="miniTitle">💡 シェアのコツ <span class="pill">かんたん</span></div>
+        <div class="muted">
+          友だちと結果を見せ合うと盛り上がる◎<br>
+          「リンクコピー」→LINEやDMに貼るのがいちばん手軽！
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> すくタイプ16</div>
+      <div style="margin-top:6px;">
+        <a href="./privacy.html">プライバシーポリシー</a> ・
+        <a href="./terms.html">利用規約</a>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast">コピーしました！</div>
+
+  <script>
+    // =========================
+    // 16タイプ定義（日本語のみ）
+    // =========================
+    const TYPE_DATA = {
+      STGL: { name: "クラスの太陽◎", emoji: "🌞", desc: "明るくて友達が多いのに、やることもちゃんとやれる安定スター。教室の空気をパッと明るくする存在◎" },
+      STGR: { name: "アクティブ委員長◎", emoji: "🏃‍♀️", desc: "行事も勉強も全力。頼られると燃えるリーダータイプ。動きながら場をまとめるのが得意◎" },
+      SWGL: { name: "ギリギリチャレンジャー◎", emoji: "⏰", desc: "普段はゆるめだけど、締切前に一気に集中して仕上げるタイプ。最後に強い“追い込み力”の持ち主◎" },
+      SWGR: { name: "イベントスター◎", emoji: "🎉", desc: "楽しさ最優先の自由人。文化祭・体育祭など“みんなで動く日”で一番輝く◎" },
+
+      STML: { name: "ひらめきプレゼン王◎", emoji: "🎤", desc: "アイデアと表現力が強いタイプ。発表や企画でスポットライトが当たりやすい◎" },
+      STMR: { name: "クリエイティブ先輩◎", emoji: "🎨", desc: "発想力＋行動力のハイブリッド。作品づくりや企画ごとで存在感がバツグン◎" },
+      SWML: { name: "ギリギリ天才◎", emoji: "🧠", desc: "気分屋だけど本番で強い。『え、いつ勉強したの？』って言われがちな謎の実力者◎" },
+      SWMR: { name: "ムードメーカー◎", emoji: "✨", desc: "わいわいが大好き。場の空気を一瞬で明るくする才能がある◎" },
+
+      CTGL: { name: "静かなる優等生◎", emoji: "📚", desc: "コツコツ積み上げる安心枠。宿題は早めに終わらせて、学びを安定させるタイプ◎" },
+      CTGR: { name: "真面目スポーツマン◎", emoji: "🏅", desc: "誠実でまっすぐ。部活も勉強も努力で結果をつかむタイプ。信頼されやすい◎" },
+      CWGL: { name: "マイペース研究者◎", emoji: "🔎", desc: "興味のあることに深く没頭するタイプ。図書室や自習の時間が落ち着く◎" },
+      CWGR: { name: "静かな観察者◎", emoji: "👀", desc: "周りをよく見ていて気持ちに敏感。控えめだけど芯がしっかりしてる◎" },
+
+      CTML: { name: "図書室プリンス◎", emoji: "📖", desc: "集中力と感性のバランスが良いタイプ。静かな場所でじわじわ力を出す◎" },
+      CTMR: { name: "ほわほわクリエイター◎", emoji: "🫧", desc: "センス科目が強め。やさしい空気で作品や企画に“かわいい味”を足せる◎" },
+      CWML: { name: "省エネ賢者◎", emoji: "🧩", desc: "最小の力で最大の結果を狙うショートカット派。効率の良さが武器◎" },
+      CWMR: { name: "内向アイドル◎", emoji: "🌷", desc: "静かめだけど仲良くなると可愛さ大爆発。少人数での人気が強い◎" }
+    };
+
+    // =========================
+    // 判定：スコア or type指定
+    // =========================
+    function parseTypeFromQuery() {
+      const url = new URL(location.href);
+      const t = (url.searchParams.get("type") || "").toUpperCase().trim();
+      return TYPE_DATA[t] ? t : "";
+    }
+
+    function loadScoresFromStorage() {
+      // 1) もっとも簡単：タイプを直接保存
+      const savedType = (localStorage.getItem("smbti_type") || "").toUpperCase().trim();
+      if (TYPE_DATA[savedType]) return { type: savedType, scores: null };
+
+      // 2) スコア保存： {S,C,T,W,G,M,L,R}
+      const raw = localStorage.getItem("smbti_scores");
+      if (!raw) return { type: "", scores: null };
+      try {
+        const s = JSON.parse(raw);
+        return { type: typeFromScores(s), scores: s };
+      } catch {
+        return { type: "", scores: null };
+      }
+    }
+
+    function typeFromScores(s) {
+      // 未定義でも0扱い
+      const S = Number(s?.S || 0), C = Number(s?.C || 0);
+      const T = Number(s?.T || 0), W = Number(s?.W || 0);
+      const G = Number(s?.G || 0), M = Number(s?.M || 0);
+      const L = Number(s?.L || 0), R = Number(s?.R || 0);
+
+      let code = "";
+      code += (S >= C) ? "S" : "C";
+      code += (T >= W) ? "T" : "W";
+      code += (G >= M) ? "G" : "M";
+      code += (L >= R) ? "L" : "R";
+      return TYPE_DATA[code] ? code : "";
+    }
+
+    // =========================
+    // シェア
+    // =========================
+    function buildShareUrl(typeCode) {
+      const url = new URL(location.href);
+      url.searchParams.set("type", typeCode);
+      return url.toString();
+    }
+
+    function buildShareText(typeCode) {
+      const d = TYPE_DATA[typeCode];
+      return `【すくタイプ16】私の学校生活タイプは「${d.emoji} ${d.name}（${typeCode}）」でした◎\n#すくタイプ16 #学校生活MBTI`;
+    }
+
+    function toast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      setTimeout(() => el.classList.remove("show"), 1400);
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        toast("リンクをコピーしたよ◎");
+      } catch {
+        // フォールバック
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        toast("リンクをコピーしたよ◎");
+      }
+    }
+
+    // =========================
+    // 表示
+    // =========================
+    function render(typeCode) {
+      const ogUrl = document.querySelector('meta[property="og:url"]');
+      if (ogUrl) ogUrl.setAttribute("content", buildShareUrl(typeCode));
+
+      const t = TYPE_DATA[typeCode];
+      document.getElementById("title").textContent = `${t.emoji} あなたは「${t.name}」`;
+      const pill = document.getElementById("codePill");
+      pill.style.display = "inline-flex";
+      pill.textContent = `コード：${typeCode}`;
+
+      document.getElementById("desc").textContent = t.desc;
+
+      // シェアUI
+      document.getElementById("shareRow").style.display = "flex";
+
+      const shareUrl = buildShareUrl(typeCode);
+      const shareText = buildShareText(typeCode);
+
+      // Web Share（対応端末ならこれが最強）
+      document.getElementById("btnShare").onclick = async () => {
+        if (navigator.share) {
+          try {
+            await navigator.share({ title: "すくタイプ16｜診断結果", text: shareText, url: shareUrl });
+          } catch {
+            // キャンセル等は無視
+          }
+        } else {
+          // 非対応ならリンクコピーに寄せる
+          await copyText(shareUrl);
+        }
+      };
+
+      // X投稿
+      document.getElementById("btnX").onclick = () => {
+        const xUrl = new URL("https://twitter.com/intent/tweet");
+        xUrl.searchParams.set("text", shareText);
+        xUrl.searchParams.set("url", shareUrl);
+        window.open(xUrl.toString(), "_blank", "noopener,noreferrer");
+      };
+
+      // リンクコピー
+      document.getElementById("btnCopy").onclick = async () => {
+        await copyText(shareUrl);
+      };
+    }
+
+    function renderError(msg) {
+      document.getElementById("title").textContent = "結果を表示できなかった…";
+      document.getElementById("desc").textContent = "";
+      const box = document.getElementById("errorBox");
+      box.style.display = "block";
+      box.textContent = msg;
+
+      // もう一回ボタンだけは使えるように
+      document.getElementById("shareRow").style.display = "none";
+      document.getElementById("codePill").style.display = "none";
+    }
+
+    // =========================
+    // 初期化
+    // =========================
+    (function init(){
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // 「もう一回」導線（診断ページ名は好きに変更OK）
+      document.getElementById("btnRetry").onclick = () => {
+        // 例：診断1ページ目を quiz-1.html にしている場合
+        location.href = "./quiz-1.html";
+      };
+
+      // 1) URL指定があればそれ最優先（シェアで開いた時用）
+      const typeFromQuery = parseTypeFromQuery();
+      if (typeFromQuery) {
+        render(typeFromQuery);
+        return;
+      }
+
+      // 2) localStorageから復元
+      const { type } = loadScoresFromStorage();
+      if (type && TYPE_DATA[type]) {
+        render(type);
+        return;
+      }
+
+      // 3) どれもなければ案内
+      renderError("診断結果が見つからないよ◎ 先に診断（24問）をやってみてね！");
+    })();
+  </script>
+</body>
+</html>
